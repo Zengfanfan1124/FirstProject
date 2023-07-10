@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zengfanfan.crm.dao.CustomerMapper">
+  <resultMap id="BaseResultMap" type="com.zengfanfan.crm.bean.Customer">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="customer_name" jdbcType="VARCHAR" property="customerName" />
+    <result column="customer_address" jdbcType="VARCHAR" property="customerAddress" />
+    <result column="customer_typeid" jdbcType="INTEGER" property="customerTypeid" />
+    <result column="customer_createtime" jdbcType="TIMESTAMP" property="customerCreatetime" />
+    <result column="customer_createsuer" jdbcType="VARCHAR" property="customerCreatesuer" />
+    <result column="customer_updatetime" jdbcType="TIMESTAMP" property="customerUpdatetime" />
+    <result column="customer_updateuser" jdbcType="VARCHAR" property="customerUpdateuser" />
+    <result column="customer_status" jdbcType="INTEGER" property="customerStatus" />
+    <result column="customer_taxid" jdbcType="VARCHAR" property="customerTaxid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, customer_name, customer_address, customer_typeid, customer_createtime,
+        customer_createsuer, customer_updatetime, customer_updateuser, customer_status,
+        customer_taxid
+  </sql>
+
+  <insert id="insert" parameterType="com.zengfanfan.crm.bean.Customer">
+    INSERT INTO customer (id, customer_name, customer_address, customer_typeid,
+                          customer_createtime, customer_createsuer, customer_updatetime, customer_updateuser,
+                          customer_status, customer_taxid)
+    VALUES (#{id,jdbcType=INTEGER}, #{customerName,jdbcType=VARCHAR}, #{customerAddress,jdbcType=VARCHAR},
+            #{customerTypeid,jdbcType=INTEGER}, #{customerCreatetime,jdbcType=TIMESTAMP},
+            #{customerCreatesuer,jdbcType=VARCHAR}, #{customerUpdatetime,jdbcType=TIMESTAMP},
+            #{customerUpdateuser,jdbcType=VARCHAR}, #{customerStatus,jdbcType=INTEGER},
+            #{customerTaxid,jdbcType=VARCHAR})
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.zengfanfan.crm.bean.Customer">
+    INSERT INTO customer
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="customerName != null">
+        customer_name,
+      </if>
+      <if test="customerAddress != null">
+        customer_address,
+      </if>
+      <if test="customerTypeid != null">
+        customer_typeid,
+      </if>
+      <if test="customerCreatetime != null">
+        customer_createtime,
+      </if>
+      <if test="customerCreatesuer != null">
+        customer_createsuer,
+      </if>
+      <if test="customerUpdatetime != null">
+        customer_updatetime,
+      </if>
+      <if test="customerUpdateuser != null">
+        customer_updateuser,
+      </if>
+      <if test="customerStatus != null">
+        customer_status,
+      </if>
+      <if test="customerTaxid != null">
+        customer_taxid,
+      </if>
+    </trim>
+    VALUES
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="customerName != null">
+        #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="customerAddress != null">
+        #{customerAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="customerTypeid != null">
+        #{customerTypeid,jdbcType=INTEGER},
+      </if>
+      <if test="customerCreatetime != null">
+        #{customerCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="customerCreatesuer != null">
+        #{customerCreatesuer,jdbcType=VARCHAR},
+      </if>
+      <if test="customerUpdatetime != null">
+        #{customerUpdatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="customerUpdateuser != null">
+        #{customerUpdateuser,jdbcType=VARCHAR},
+      </if>
+      <if test="customerStatus != null">
+        #{customerStatus,jdbcType=INTEGER},
+      </if>
+      <if test="customerTaxid != null">
+        #{customerTaxid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM customer
+    WHERE id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectall" resultMap="BaseResultMap" parameterType="string">
+    SELECT *
+    FROM customer
+    <where>
+      <if test="name != null">
+        customer_name LIKE CONCAT('%', #{name}, '%'),
+      </if>
+    </where>
+    order by id
+  </select>
+  <select id="selectByCustomerName" resultType="com.zengfanfan.crm.bean.Customer"></select>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.zengfanfan.crm.bean.Customer">
+    UPDATE customer
+    <set>
+      <if test="customerName != null">
+        customer_name = #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="customerAddress != null">
+        customer_address = #{customerAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="customerTypeid != null">
+        customer_typeid = #{customerTypeid,jdbcType=INTEGER},
+      </if>
+      <if test="customerCreatetime != null">
+        customer_createtime = #{customerCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="customerCreatesuer != null">
+        customer_createsuer = #{customerCreatesuer,jdbcType=VARCHAR},
+      </if>
+      <if test="customerUpdatetime != null">
+        customer_updatetime = #{customerUpdatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="customerUpdateuser != null">
+        customer_updateuser = #{customerUpdateuser,jdbcType=VARCHAR},
+      </if>
+      <if test="customerStatus != null">
+        customer_status = #{customerStatus,jdbcType=INTEGER},
+      </if>
+      <if test="customerTaxid != null">
+        customer_taxid = #{customerTaxid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    WHERE id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.zengfanfan.crm.bean.Customer">
+    UPDATE customer
+    SET customer_name = #{customerName,jdbcType=VARCHAR},
+        customer_address = #{customerAddress,jdbcType=VARCHAR},
+        customer_typeid = #{customerTypeid,jdbcType=INTEGER},
+        customer_createtime = #{customerCreatetime,jdbcType=TIMESTAMP},
+        customer_createsuer = #{customerCreatesuer,jdbcType=VARCHAR},
+        customer_updatetime = #{customerUpdatetime,jdbcType=TIMESTAMP},
+        customer_updateuser = #{customerUpdateuser,jdbcType=VARCHAR},
+        customer_status = #{customerStatus,jdbcType=INTEGER},
+        customer_taxid = #{customerTaxid,jdbcType=VARCHAR}
+    WHERE id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    DELETE FROM customer
+    WHERE id = #{id,jdbcType=INTEGER}
+  </delete>
+</mapper>
